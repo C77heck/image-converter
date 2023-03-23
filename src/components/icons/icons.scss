@@ -1,0 +1,36 @@
+.spin {
+    display: inline-block;
+    animation: rotate 1200ms linear infinite;
+}
+
+.hover-instagram {
+    transition: color 200ms linear;
+
+    &:hover {
+        color: #E4405F;
+    }
+}
+
+.hover-twitter {
+    transition: color 200ms linear;
+
+    &:hover {
+        color: #1DA1F2;
+    }
+}
+
+.hover-linkedin {
+    transition: color 200ms linear;
+
+    &:hover {
+        color: #0A66C2;
+    }
+}
+
+.hover-facebook {
+    transition: color 200ms linear;
+
+    &:hover {
+        color: #1877F2;
+    }
+}

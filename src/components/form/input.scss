@@ -1,0 +1,203 @@
+.input-wrapper {
+    padding: 0.5rem;
+    border: 1px solid var(--color-dark-2);
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    background-color: var(--color-light);
+    height: 40px;
+
+    & input {
+        width: 100%;
+        height: 2.5rem;
+        outline: none;
+        border: none;
+        background-color: transparent;
+    }
+}
+
+.error-show {
+    color: var(--color-error-1);
+
+    &--div {
+        color: var(--color-error-1);
+        background-color: var(--color-error-see-through);
+        border-color: var(--color-error-1);
+    }
+
+    &--label {
+        color: var(--color-error-1) !important;
+    }
+}
+
+.input-label {
+    margin: 0.4rem 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--color-dark-2);
+}
+
+.input-dropdown {
+    border: 1px solid var(--color-dark-2);
+    width: 100%;
+    margin: 0;
+    padding: 0.5rem;
+    position: absolute;
+    left: -1px;
+    width: 100.5%;
+    background: white;
+    z-index: 4;
+    border-top: none;
+    top: 33px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    box-shadow: 1px 11px 8px 3px var(--color-shadow);
+
+    & ul {
+        & li {
+            list-style: none;
+            font-size: 1.5rem;
+            color: var(--color-dark-3);
+            transition: color 200ms;
+            cursor: pointer;
+            user-select: none;
+            padding-bottom: 0.8rem;
+
+            &:hover {
+                color: var(--color-dark-1);
+            }
+        }
+    }
+}
+
+.dropdown {
+    transition: all 230ms;
+
+    &--show {
+        display: inherit;
+        z-index: 4;
+    }
+
+    &--hide {
+        visibility: hidden;
+        opacity: 0;
+        z-index: -4;
+    }
+
+    &--searchable {
+        left: -1px;
+        width: 100%;
+        max-height: 300px;
+        overflow: scroll;
+    }
+}
+
+.dropdown-general {
+    border: 1px solid var(--color-dark-2);
+    padding: 0.5rem;
+    position: absolute;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 1px 11px 8px 3px var(--color-shadow);
+    min-width: 120px;
+}
+
+.question-button {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+}
+
+.question-circle {
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid;
+
+    &--filling {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        transition: all 340ms;
+    }
+}
+
+textarea {
+    font-family: 'Oswald', sans-serif;
+}
+
+.logo-uploader {
+    border: solid 1px var(--text-color-light);
+    width: 104px;
+    height: 104px;
+    cursor: pointer !important;
+    overflow: hidden;
+
+    & img {
+        max-width: 100%;
+        object-fit: contain;
+    }
+}
+
+.cv-uploader {
+    border: solid 1px var(--color-dark-2);
+    border-radius: 4px;
+    width: 104px;
+    height: 104px;
+    cursor: pointer !important;
+    overflow: hidden;
+
+    & img {
+        max-width: 100%;
+        object-fit: contain;
+    }
+}
+
+.searchable-input {
+    color: var(--color-secondary-1);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    font-family: 'Oswald', sans-serif;
+}
+
+.searchable-input--multi{
+    padding: 1px 6px 3px;
+    background: var(--color-secondary-1);
+    color: white;
+    border-radius: 7px;
+    margin-left: 4px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    font-family: 'Oswald', sans-serif;
+}
+
+.search-bar-input {
+    border: solid 1px var(--text-color-light) !important;
+    border-radius: 4px;
+    padding: 5px;
+    height: 30px !important;
+    margin: 5px 0;
+    font-family: 'Oswald', sans-serif;
+    color: var(--text-color-medium);
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.arrow-wrapper {
+    padding: 0 4px;
+    border-left: solid 1px var(--color-dark-2)
+}
+
+.select-input-active-option {
+    border: 1px solid var(--color-secondary-1);
+    padding: 1px 3px;
+    background-color: #15bd9e33;
+    color: var(--color-secondary-1) !important;
+}
