@@ -14,7 +14,10 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <main>
-                <MultiFileUploader/>
+                <h1 className={'text-align-center py-30'}>Image converter</h1>
+                <div className={'w-100 min-height-100 position-center'}>
+                    <MultiFileUploader/>
+                </div>
             </main>
         </>
     );

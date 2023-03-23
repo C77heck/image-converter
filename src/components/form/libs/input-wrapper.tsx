@@ -13,7 +13,7 @@ interface NormalWrapperProps extends FieldProps {
 export const InputWrapper = (props: NormalWrapperProps) => {
     const errorClass = `error-${props.hasError && !props.isInFocus ? 'show' : 'hide'}--div`;
     const overflowClass = `${props.isOverflowHidden ? '' : 'overflow-hidden'}`;
-    const wrapperClasses = `position-center input-wrapper ${props.wrapperClasses} ${errorClass} ${overflowClass} cursor-pointer`;
+    const wrapperClasses = `position-center ${props?.wrapperClasses ?? 'input-wrapper'} ${errorClass} ${overflowClass} cursor-pointer`;
 
     return <div
         className={`display-flex flex-column ${props.className}`}

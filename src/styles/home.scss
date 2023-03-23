@@ -1,8 +1,9 @@
 .uploader-wrapper {
-    height: 500px;
+    height: 400px;
     width: 70vw;
     border: 1px solid #b6b3b3;
     border-radius: 16px;
+    padding: 1.5rem;
 }
 
 .image-upload {
@@ -10,4 +11,9 @@
     height: 110px;
     border-radius: 10px;
     border: 1px solid #b9b6b6;
+}
+
+body {
+    background-color: #1f1f1f;
+    color: white;
 }

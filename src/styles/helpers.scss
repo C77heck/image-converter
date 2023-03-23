@@ -1,4 +1,4 @@
-@mixin Helpers($lg, $xl, $md, $sm, $mlg) {
+@mixin Helpers($sm, $md, $lg, $xl) {
     .opacity {
         &--low {
             opacity: 0.4;
@@ -54,6 +54,7 @@
     .display-none {
         display: none;
     }
+
     .display-sm-none {
         @media (min-width: $sm) {
             display: none !important;
@@ -340,9 +341,7 @@
         cursor: pointer !important;
 
         &:hover {
-            color: rgb(218, 175, 58);
-
-            color: var(--color-secondary-1);
+            color: rgb(94, 94, 92);
         }
     }
     .hover-yellow {
@@ -435,7 +434,7 @@
     }
 
 
-    @each $i in through 10, 20, 30, 40 {
+    @each $i in 10, 20, 30, 40 {
         .#{z- + $i} {
             z-index: $i !important;
         }
@@ -490,13 +489,6 @@
             padding-bottom: $i + px !important;
         }
 
-        .#{col-mlg- + $i} {
-            @media (min-width: $mlg) {
-                flex: 0 0 $i * 1% !important;
-                max-width: $i * 1% !important;
-            }
-        }
-
         .#{col-md- + $i} {
             @media (min-width: $md) {
                 flex: 0 0 $i * 1% !important;
@@ -513,6 +505,14 @@
                 max-width: $i * 1% !important;
             }
         }
+    }
+
+    .min-height-vh-100 {
+        min-height: 100vh;
+    }
+
+    .w-100 {
+        width: 100%;
     }
 
     .appear-smoothly {

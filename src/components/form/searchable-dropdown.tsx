@@ -1,5 +1,6 @@
 import { OptionProps } from '@/components/form/input';
 import { AbstractDropdown, DropdownProps } from '@/components/form/libs/abstract.dropdown';
+import { ArrowDown, ArrowUp } from '@/components/icons/icons';
 import { handleErrors } from '@/libs/handle-errors';
 import React from 'react';
 
@@ -129,7 +130,7 @@ export class SearchableDropdown extends AbstractDropdown<SearchableDropdownProps
         const isChosen = this.props.value?.value === value;
 
         return <span
-            ref={ref => (this.refs as any).push(ref)}
+            ref={ref => (this.spanRefs as any).push(ref)}
             key={`${value}-${title}`}
             onClick={() => this.props.onClickHandler(isChosen, option)}
             className={`${isChosen && 'select-input-active-option'} fs-14 hover-primary pb-4`}

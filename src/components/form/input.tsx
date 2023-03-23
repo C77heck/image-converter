@@ -111,9 +111,17 @@ export const Input = (props: FieldProps) => {
         case INPUTS.CHECKBOX:
             return manageInputType(element);
         case INPUTS.SEARCHABLE_DROPDOWN:
-            return <InputWrapper {...props} {...{ prodRef, ...state }} isOverflowHidden={true}>{manageInputType(element)}</InputWrapper>;
+            return <InputWrapper
+                {...props}
+                {...{ prodRef, ...state }}
+                isOverflowHidden={true}
+            >{manageInputType(element)}</InputWrapper>;
         case INPUTS.MULTI_SEARCHABLE_DROPDOWN:
-            return <InputWrapper {...props} {...{ prodRef, ...state }} isOverflowHidden={true}>{manageInputType(element)}</InputWrapper>;
+            return <InputWrapper
+                {...props}
+                {...{ prodRef, ...state }}
+                isOverflowHidden={true}
+            >{manageInputType(element)}</InputWrapper>;
         default:
             return <InputWrapper {...props} {...{ prodRef, ...state }}>{manageInputType(element)}</InputWrapper>;
     }
