@@ -1,6 +1,8 @@
+import { Button } from '@/components/buttons/button';
 import { UploaderMulti } from '@/components/file-upload/file-uploader';
 import { Input } from '@/components/form/input';
 import { CONSTANTS } from '@/components/form/libs/constants';
+import { Close } from '@/components/icons/icons';
 import { useForm } from '@/libs/hooks/form.hook';
 import { useState } from 'react';
 
@@ -24,6 +26,35 @@ export const MultiFileUploader = () => {
     });
     const uploadSuccessful = (attachments: any[]) => {
         setAttachments(attachments);
+    };
+
+    const submitConversion = async () => {
+        try {
+            console.log('submitConversion');
+
+            const body: string = JSON.stringify({
+                attachments,
+                quality: inputs.quality.value,
+                types: inputs.types.value,
+                saveLocation: inputs.saveLocation.value,
+            });
+            console.log('stringify');
+
+            const response = await fetch('/api/convert', {
+                body,
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(response);
+
+            const responseData = await response.json();
+
+            console.log(responseData);
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return <div className={'uploader-wrapper row'}>
@@ -65,11 +96,33 @@ export const MultiFileUploader = () => {
                 <UploaderMulti onUploadSuccess={uploadSuccessful}/>
             </div>
             <div className={'col-100 position-center'}>
-                {attachments?.map((attachment, index) => <div key={index} className={'image-display'}>
-                    <span>{attachment.name}</span>
-                    <img src={`data:image/${attachment.type};base64,${attachment.base64}`}/>
-                </div>)}
+
             </div>
+        </div>
+        <div className={'col-100 position-center mt-30  mb-10'}>
+            <Button
+                className={'h-px-35 w-px-180'}
+                buttonStyle={'success'}
+                onClick={() => submitConversion()}
+            >
+                <div>
+                    <span className={'fs-15 color--light'}>Convert</span>
+                </div>
+            </Button>
+        </div>
+        <div className={'col-100 my-30 hr--light'}/>
+        <div className={'col-100 row justify-content-start'}>
+            {attachments?.map((attachment, index) => <div key={attachment.name} className={'flex-column position-center col-20'}>
+                <span className={'fs-12 w-px-100'}>{attachment.name}</span>
+                <div className={'image-display mt-5 position-relative'}>
+                    <Close
+                        onClick={() => setAttachments(prev => prev.filter(attach => attach.name !== attachment.name))}
+                        width={20}
+                        className={'color--light hover-opacity position-center w-px-25 h-px-25 br-4 move-right bg-dark-transparent'}
+                    />
+                    <img src={`data:image/${attachment.type};base64,${attachment.base64}`}/>
+                </div>
+            </div>)}
         </div>
     </div>;
 };

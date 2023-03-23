@@ -29,6 +29,8 @@ export interface ReqBody {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     try {
+        console.log('hitting it');
+
         const body: ReqBody = req.body;
         const quality = body?.quality || 'high';
         const fileDatas = body.files;

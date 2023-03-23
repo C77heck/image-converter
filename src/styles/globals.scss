@@ -9,4 +9,12 @@ $lg: 90em; // 1440
 $md: 56.25em; // 900
 $sm: 37.5em; // 600
 
-@include Helpers($sm, $md, $lg, $xl);
+$colors: (
+    white: #ffffff,
+    blue: #2525b7,
+    purple: #63168A,
+    pink: #ba2568,
+    dark-transparent: rgba(38, 37, 37, 0.71)
+);
+
+@include Helpers($sm, $md, $lg, $xl,$colors);

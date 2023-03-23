@@ -152,8 +152,8 @@ export class MultiSearchableDropdown extends AbstractDropdown<MultiSearchableDro
 
     public renderArrows() {
         return this.state.show
-            ? <ArrowUp color={'rgba(8, 61, 66, 0.53)'} className={'position-center arrow-wrapper'} width={15}/>
-            : <ArrowDown color={'rgba(8, 61, 66, 0.53)'} className={'position-center arrow-wrapper'} width={15}/>;
+            ? <ArrowUp color={'rgba(255,255,255,0.84)'} className={'position-center arrow-wrapper'} width={15}/>
+            : <ArrowDown color={'rgba(255,255,255,0.95)'} className={'position-center arrow-wrapper'} width={15}/>;
     }
 
     public renderOption(option: OptionProps) {
