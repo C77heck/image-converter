@@ -2,8 +2,10 @@ import { UploaderMulti } from '@/components/file-upload/file-uploader';
 import { Input } from '@/components/form/input';
 import { CONSTANTS } from '@/components/form/libs/constants';
 import { useForm } from '@/libs/hooks/form.hook';
+import { useState } from 'react';
 
 export const MultiFileUploader = () => {
+    const [attachments, setAttachments] = useState([]);
     const { inputHandler, inputState: { inputs }, isFormValid } = useForm({
         inputs: {
             quality: {
@@ -21,7 +23,7 @@ export const MultiFileUploader = () => {
         }
     });
     const uploadSuccessful = (attachments: any[]) => {
-        console.log({ attachments });
+        setAttachments(attachments);
     };
 
     return <div className={'uploader-wrapper row'}>
@@ -60,20 +62,13 @@ export const MultiFileUploader = () => {
         </div>
         <div className={'row col-50'}>
             <div className={'col-100 position-center'}>
-                <UploaderMulti
-                    onUploadSuccess={uploadSuccessful}
-                    trigger={<div className={'image-upload hover-opacity position-center'}>
-                        <span>Upload</span>
-                    </div>}
-                />
+                <UploaderMulti onUploadSuccess={uploadSuccessful}/>
             </div>
             <div className={'col-100 position-center'}>
-                <UploaderMulti
-                    onUploadSuccess={uploadSuccessful}
-                    trigger={<div className={'image-upload hover-opacity position-center'}>
-                        <span>Upload</span>
-                    </div>}
-                />
+                {attachments?.map((attachment, index) => <div key={index} className={'image-display'}>
+                    <span>{attachment.name}</span>
+                    <img src={`data:image/${attachment.type};base64,${attachment.base64}`}/>
+                </div>)}
             </div>
         </div>
     </div>;

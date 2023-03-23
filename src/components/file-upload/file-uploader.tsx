@@ -1,3 +1,4 @@
+import { Loader } from '@/components/loader/loader';
 import * as React from 'react';
 import { Component } from 'react';
 
@@ -18,11 +19,18 @@ export class UploaderMulti extends Component<any, {}> {
                 this.props.onUploadSuccess(this.state.attachments);
             }
         }
+        if (prevState.loading !== this.state.loading) {
+            console.log('triggering ', this.state.loading);
+        }
     }
 
     public render(): React.ReactNode {
         return <div className={'ProfileImageUploader'}>
-            <label htmlFor={'profileImageUpload'}>{this.props.trigger}</label>
+            <label htmlFor={'profileImageUpload'}>
+                <div className={'image-upload hover-opacity position-center'}>
+                    <Loader loading={this.state.loading} children={<span>Upload</span>}/>
+                </div>
+            </label>
             <input
                 onChange={(e) => this.addFiles(e)}
                 ref={(ref) => this.imageInputRef$ = ref}
@@ -37,34 +45,35 @@ export class UploaderMulti extends Component<any, {}> {
 
     public async addFiles(e: any) {
         const files = e.target.files || [];
-        this.setState({ loading: true });
         this.setState({ uploadQuantity: files.length });
-
+        console.log(files[0]);
         for (const file of files) {
             await this.addFile(file);
         }
-
-        this.setState({ loading: false });
     }
 
     public async addFile(file: any) {
+        this.setState({ loading: true });
         const reader = new FileReader();
 
         reader.readAsArrayBuffer(file);
 
         reader.onload = async () => {
             try {
-                this.setState({ error: null });
-                const upload: any = await this.createAttachment(Buffer.from((reader.result as Buffer)).toString('base64'));
-                this.setState({ attachments: [...this.state.attachments, upload.default.payload || ''] });
+                const newAttachment = {
+                    base64: Buffer.from((reader.result as Buffer)).toString('base64'),
+                    name: file?.name || '',
+                    type: file?.type || 'image/png'
+                };
+                this.setState({
+                    attachments: [...this.state.attachments, newAttachment],
+                    error: null,
+                });
             } catch (err) {
                 this.setState({ error: err });
+            } finally {
+                this.setState({ loading: false });
             }
         };
-    }
-
-    public async createAttachment(data: string) {
-        console.log('sending attachment', data);
-        return {};
     }
 }
