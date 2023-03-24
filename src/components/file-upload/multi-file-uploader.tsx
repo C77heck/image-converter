@@ -24,6 +24,7 @@ export const MultiFileUploader = () => {
             },
         }
     });
+
     const uploadSuccessful = (newAttachment: RawAttachment) => {
         setAttachments(prev => ([...prev, newAttachment]));
     };
@@ -32,8 +33,8 @@ export const MultiFileUploader = () => {
         try {
             const body: string = JSON.stringify({
                 files: attachments,
-                quality: inputs.quality.value,
-                types: inputs.types.value,
+                quality: inputs.quality.value?.value,
+                types: inputs.types.value.map(type => type?.value),
                 saveLocation: inputs.saveLocation.value,
             });
 
@@ -44,7 +45,6 @@ export const MultiFileUploader = () => {
                     'Content-Type': 'application/json'
                 },
             });
-            console.log(response);
 
             const responseData = await response.json();
 
@@ -110,16 +110,17 @@ export const MultiFileUploader = () => {
         <div className={'col-100 my-30 hr--light'}/>
         <div className={'col-100 row justify-content-start'}>
             {attachments?.map((attachment, index) => <div key={attachment.name} className={'flex-column position-center col-20'}>
-                <span className={'fs-12 w-px-100'}>{attachment.name}</span>
-                <div className={'image-display mt-5 position-relative'}>
-                    <Close
-                        onClick={() => setAttachments(prev => prev.filter(attach => attach.name !== attachment.name))}
-                        width={20}
-                        className={'color--light hover-opacity position-center w-px-25 h-px-25 br-4 move-right bg-dark-transparent'}
-                    />
-                    <img src={`data:image/${attachment.type};base64,${attachment.base64}`}/>
+                    <span className={'fs-12 w-px-100'}>{attachment.name}</span>
+                    <div className={'image-display mt-5 position-relative'}>
+                        <Close
+                            onClick={() => setAttachments(prev => prev.filter(attach => attach.name !== attachment.name))}
+                            width={20}
+                            className={'color--light hover-opacity position-center w-px-25 h-px-25 br-4 move-right bg-dark-transparent'}
+                        />
+                        <img src={`data:image/${attachment.type};base64,${attachment.base64}`}/>
+                    </div>
                 </div>
-            </div>)}
+            )}
         </div>
     </div>;
 };

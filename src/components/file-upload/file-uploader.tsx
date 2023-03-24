@@ -7,6 +7,8 @@ export interface RawAttachment {
     base64: Base64;
     name: string;
     type: string;
+    originalWidth: number;
+    originalHeight: number;
 };
 
 export interface UploaderMultiProps {
@@ -61,11 +63,19 @@ export class UploaderMulti extends Component<UploaderMultiProps, {}> {
         reader.onload = async () => {
             try {
                 this.setState({ loading: true });
-                this.props.onUploadSuccess({
-                    base64: Buffer.from((reader.result as Buffer)).toString('base64'),
-                    name: file?.name || '',
-                    type: file?.type || 'image/png'
-                });
+                const image = new Image();
+                const base64 = Buffer.from((reader.result as Buffer)).toString('base64');
+                const type = file?.type || 'image/png';
+                const name = file?.name || '';
+                image.src = `data:image/${type};base64,${base64}`;
+
+                image.onload = () => {
+                    this.props.onUploadSuccess({
+                        base64, name, type,
+                        originalWidth: image.naturalWidth,
+                        originalHeight: image.naturalHeight
+                    });
+                };
 
                 this.setState({ error: null, });
             } catch (err) {

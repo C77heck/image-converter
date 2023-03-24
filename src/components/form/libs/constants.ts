@@ -12,16 +12,15 @@ export const CONSTANTS = {
     SAVE_LOCATION: '/Users/zoltancsilleri/Desktop/',
     OPTIONS: {
         TYPES: [
-            { value: 'All', title: 'all' },
-            { value: 'Thumbnail', title: 'thumbnail' },
-            { value: 'Same size', title: 'same-size' },
-            { value: 'Mobile type', title: 'mobile-types' },
-            { value: 'Desktop type', title: 'desktop-types' },
+            { title: 'All', value: 'all' },
+            { title: 'Thumbnail', value: 'thumbnail' },
+            { title: 'Retain size', value: 'same-size' },
+            { title: 'Mobile type', value: 'mobile-types' },
         ],
         QUALITY: [
-            { value: 'High', title: 'high' },
-            { value: 'Medium', title: 'medium' },
-            { value: 'Low', title: 'low' },
+            { title: 'High', value: 'high' },
+            { title: 'Medium', value: 'medium' },
+            { title: 'Low', value: 'low' },
         ],
     }
 };
