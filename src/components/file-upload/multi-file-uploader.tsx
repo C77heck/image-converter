@@ -1,5 +1,5 @@
 import { Button } from '@/components/buttons/button';
-import { UploaderMulti } from '@/components/file-upload/file-uploader';
+import { RawAttachment, UploaderMulti } from '@/components/file-upload/file-uploader';
 import { Input } from '@/components/form/input';
 import { CONSTANTS } from '@/components/form/libs/constants';
 import { Close } from '@/components/icons/icons';
@@ -24,28 +24,25 @@ export const MultiFileUploader = () => {
             },
         }
     });
-    const uploadSuccessful = (attachments: any[]) => {
-        setAttachments(attachments);
+    const uploadSuccessful = (newAttachment: RawAttachment) => {
+        setAttachments(prev => ([...prev, newAttachment]));
     };
 
     const submitConversion = async () => {
         try {
-            console.log('submitConversion');
-
             const body: string = JSON.stringify({
-                attachments,
+                files: attachments,
                 quality: inputs.quality.value,
                 types: inputs.types.value,
                 saveLocation: inputs.saveLocation.value,
             });
-            console.log('stringify');
 
             const response = await fetch('/api/convert', {
                 body,
-                method: 'post',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
             });
             console.log(response);
 

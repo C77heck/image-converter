@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/body-parser": "^1.19.2",
     "@types/node": "18.15.5",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@types/sharp": "^0.31.1",
     "@types/uuid": "^9.0.1",
+    "body-parser": "^1.20.2",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "next": "13.2.4",
