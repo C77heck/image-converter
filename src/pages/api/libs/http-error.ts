@@ -25,7 +25,6 @@ export class HttpError extends Error {
                     return null;
             }
         } catch (e) {
-            console.log({ handleErrorPayload: e });
             return null;
         }
     }

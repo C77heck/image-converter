@@ -42,7 +42,7 @@ export class MultiSearchableDropdown extends AbstractDropdown<MultiSearchableDro
         try {
             const index = this.getIndex(direction);
             const value = this.state.searchedOptions[this.getIndex(direction)];
-            console.log({ index, value, options: this.props.options });
+
             this.handleKeypressChange(value);
         } catch (e) {
             handleErrors(e);
@@ -63,7 +63,7 @@ export class MultiSearchableDropdown extends AbstractDropdown<MultiSearchableDro
 
         for (const option of options) {
             const isChosen = !(this.props.value || []).find(v => v.value === option.value);
-            console.log({ index, isChosen });
+
             if (isChosen) {
                 return direction === 'down' ? index + 1 : index - 1;
             }

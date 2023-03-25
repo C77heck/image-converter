@@ -38,7 +38,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         directoryService.ensureDirectoryExistence(body.saveLocation);
 
         for (const file of files) {
-            console.log('starting', file.name);
             const uploadName = getFileNameWithoutExtension(file);
             const originalWidth = file.originalWidth;
             const originalHeight = file.originalHeight;
@@ -48,8 +47,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             const sharpOptions = { quality, file: Buffer.from(file.base64, 'base64' as any), };
 
             for (const type of types) {
-                console.log('starting', file.name, type);
-
                 switch (type) {
                     case 'all':
                         await sharpService.convert({ ...sharpOptions, saveLocation: sameSize });

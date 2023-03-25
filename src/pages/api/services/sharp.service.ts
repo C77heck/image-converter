@@ -14,7 +14,7 @@ export interface SharpMobileOptions extends SharpOptions {
 }
 
 export class SharpService {
-    public async toMobileSize({ saveLocation, file, originalWidth, originalHeight }: SharpOptions) {
+    public async toMobileSize({ saveLocation, file, originalWidth, originalHeight }: SharpMobileOptions) {
         console.log('toMobileSize');
         await sharp(file)
             .resize({ width: originalWidth / 2, height: originalHeight / 2 })
@@ -22,7 +22,7 @@ export class SharpService {
             .toFile(saveLocation);
     }
 
-    public async toThumbnail({ quality, saveLocation, file }: SharpMobileOptions) {
+    public async toThumbnail({ saveLocation, file }: SharpOptions) {
         console.log('toThumbnail');
         await sharp(file)
             .resize({ width: 100, height: 100 })
