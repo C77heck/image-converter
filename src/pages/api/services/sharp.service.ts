@@ -13,28 +13,24 @@ export interface SharpMobileOptions extends SharpOptions {
     originalHeight: number;
 }
 
-export interface ISharpService {
-    convert: (options: SharpOptions) => Promise<void>;
-    toThumbnail: (options: SharpOptions) => Promise<void>;
-    toMobileSize: (options: SharpMobileOptions) => Promise<void>;
-}
-
-export const SharpService: ISharpService = {
-    toMobileSize: async ({ saveLocation, file, originalWidth, originalHeight }) => {
+export class SharpService {
+    public async toMobileSize({ saveLocation, file, originalWidth, originalHeight }: SharpOptions) {
         console.log('toMobileSize');
         await sharp(file)
             .resize({ width: originalWidth / 2, height: originalHeight / 2 })
             .webp({ quality: 100 })
             .toFile(saveLocation);
-    },
-    toThumbnail: async ({ quality, saveLocation, file }) => {
+    }
+
+    public async toThumbnail({ quality, saveLocation, file }: SharpMobileOptions) {
         console.log('toThumbnail');
         await sharp(file)
             .resize({ width: 100, height: 100 })
             .webp({ quality: 100 })
             .toFile(saveLocation);
-    },
-    convert: async ({ quality, saveLocation, file }) => {
+    }
+
+    public async convert({ quality, saveLocation, file }: SharpOptions) {
         console.log('convert');
         try {
             switch (quality) {

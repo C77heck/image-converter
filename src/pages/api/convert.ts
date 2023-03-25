@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { RawAttachment } from '@/components/file-upload/file-uploader';
 import { HttpError } from '@/pages/api/libs/http-error';
+import { DirectoryService } from '@/pages/api/services/directory.service';
 import { Quality, SharpService } from '@/pages/api/services/sharp.service';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { v4 } from 'uuid';
@@ -22,20 +23,23 @@ export interface ReqBody {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     try {
-        const body: ReqBody = req.body;
-        const quality = body?.quality || 'high';
-        const files = body.files;
-        const types = body.types;
-        const saveLocation = body.saveLocation;
-
-        if (!files?.length) {
+        if (!req?.body?.files?.length) {
             throw new HttpError({ message: 'No files were attached' });
         }
-        console.log('starting');
+
+        const directoryService = new DirectoryService();
+        const sharpService = new SharpService();
+        const body: ReqBody = req.body;
+        const quality = body?.quality || 'high';
+        const files = body?.files;
+        const types = body?.types;
+        const saveLocation = body.saveLocation;
+
+        directoryService.ensureDirectoryExistence(body.saveLocation);
 
         for (const file of files) {
             console.log('starting', file.name);
-            const uploadName = file?.name || v4();
+            const uploadName = getFileNameWithoutExtension(file);
             const originalWidth = file.originalWidth;
             const originalHeight = file.originalHeight;
             const sameSize = `${saveLocation}/${uploadName}.webp`;
@@ -48,18 +52,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
                 switch (type) {
                     case 'all':
-                        await SharpService.convert({ ...sharpOptions, saveLocation: sameSize });
-                        await SharpService.toThumbnail({ ...sharpOptions, saveLocation: thumbnailLocation });
-                        await SharpService.toMobileSize({ ...sharpOptions, originalWidth, originalHeight, saveLocation: mobileLocation });
+                        await sharpService.convert({ ...sharpOptions, saveLocation: sameSize });
+                        await sharpService.toThumbnail({ ...sharpOptions, saveLocation: thumbnailLocation });
+                        await sharpService.toMobileSize({ ...sharpOptions, originalWidth, originalHeight, saveLocation: mobileLocation });
                         break;
                     case 'same-size':
-                        await SharpService.convert({ ...sharpOptions, saveLocation: sameSize });
+                        await sharpService.convert({ ...sharpOptions, saveLocation: sameSize });
                         break;
                     case 'mobile-types':
-                        await SharpService.toMobileSize({ ...sharpOptions, originalWidth, originalHeight, saveLocation: mobileLocation });
+                        await sharpService.toMobileSize({ ...sharpOptions, originalWidth, originalHeight, saveLocation: mobileLocation });
                         break;
                     case 'thumbnail':
-                        await SharpService.toThumbnail({ ...sharpOptions, saveLocation: thumbnailLocation });
+                        await sharpService.toThumbnail({ ...sharpOptions, saveLocation: thumbnailLocation });
                         break;
                     default:
 
@@ -67,8 +71,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             }
         }
 
-        res.json({ message: 'success' });
+        res.status(201).json({ message: 'success' });
     } catch (e) {
-        res.json({ e, message: 'failure' });
+        res.status(500).json({ e, message: 'failure' });
     }
+}
+
+function getFileNameWithoutExtension(file: RawAttachment): string {
+    if (!file?.name) {
+        return v4();
+    }
+    const types = {
+        'image/png': '.png',
+        'image/jpg': '.jpg',
+        'image/jpeg': '.jpeg',
+        'image/webp': '.webp',
+    };
+
+    const fileType = file?.type || 'image/png';
+
+    return file?.name?.replace(types[fileType], '');
 }
